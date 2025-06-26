@@ -34,7 +34,7 @@ RUN mkdir -p /home/laravel/.composer && \
 USER laravel
 
 # Copy existing application directory contents
-COPY --chown=laravel:laravel . /var/www/html/laravel-blog/
+COPY --chown=laravel:laravel . /var/www/html
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
