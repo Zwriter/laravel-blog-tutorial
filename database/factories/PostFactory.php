@@ -6,20 +6,12 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
- */
 class PostFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         $title = fake()->sentence(6, true);
-
+        
         return [
             'title' => $title,
             'slug' => Str::slug($title),
@@ -35,7 +27,7 @@ class PostFactory extends Factory
 
     public function published(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'is_published' => true,
             'published_at' => fake()->dateTimeBetween('-6 months', 'now'),
         ]);
@@ -43,7 +35,7 @@ class PostFactory extends Factory
 
     public function draft(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'is_published' => false,
             'published_at' => null,
         ]);

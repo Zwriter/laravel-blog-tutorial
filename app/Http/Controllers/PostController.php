@@ -27,8 +27,8 @@ class PostController extends Controller
             'user',
             'approvedComments' => function ($query) {
                 $query->with('user', 'approvedReplies.user')
-                    ->whereNull('parent_id')
-                    ->latest();
+                      ->whereNull('parent_id')
+                      ->latest();
             }
         ]);
 

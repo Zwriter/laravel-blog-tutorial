@@ -23,6 +23,27 @@ class CommentController extends Controller
         return view('admin.comments.show', compact('comment'));
     }
 
+    public function edit(Comment $comment)
+    {
+        return view('admin.comments.edit', compact('comment'));
+    }
+
+    public function update(Request $request, Comment $comment)
+    {
+        $request->validate([
+            'content' => 'required|string|max:1000',
+            'is_approved' => 'boolean',
+        ]);
+
+        $comment->update([
+            'content' => $request->content,
+            'is_approved' => $request->boolean('is_approved'),
+        ]);
+
+        return redirect()->route('admin.comments.show', $comment)
+            ->with('success', 'Comment updated successfully.');
+    }
+
     public function approve(Comment $comment)
     {
         $comment->update(['is_approved' => !$comment->is_approved]);
@@ -34,6 +55,8 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $comment->delete();
-        return redirect()->route('admin.comments.index')->with('success', 'Comment deleted successfully.');
+
+        return redirect()->route('admin.comments.index')
+            ->with('success', 'Comment deleted successfully.');
     }
 }
